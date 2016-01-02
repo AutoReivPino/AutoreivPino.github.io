@@ -57,7 +57,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/06/03/MySQL索引/index.html">
 <meta property="og:site_name" content="Pino's Blog">
 <meta property="og:description" content="show index 命令及 explain命令详解">
-<meta property="og:updated_time" content="2016-01-02T16:25:23.973Z">
+<meta property="og:updated_time" content="2016-01-02T16:35:22.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL索引">
 <meta name="twitter:description" content="show index 命令及 explain命令详解">
@@ -314,8 +314,10 @@
 </tbody>
 </table>
 <ul>
-<li>id(select_id)<br>SELECT查询的序号。该值可以是 <code>NULL</code>,The value can be NULL if the row refers to the union result of other rows.在这种情况下，<code>table</code> 列会显示 <code>&lt;unionM,N&gt;</code>，表示该行联合了M和N的结果。</li>
-<li>select_type<br>SELECT的类型，它可以是下表中的任意一个。JSON格式的EXPLAIN公开select_type为查询块的属性，除非它是<code>SIMPLE</code>或<code>PRIMARY</code>。将JSON名称（如适用）也示于表中。</li>
+<li><p>id(select_id)<br>SELECT查询的序号。该值可以是 <code>NULL</code>,The value can be NULL if the row refers to the union result of other rows.在这种情况下，<code>table</code> 列会显示 <code>&lt;unionM,N&gt;</code>，表示该行联合了M和N的结果。</p>
+</li>
+<li><p>select_type<br>SELECT的类型，它可以是下表中的任意一个。JSON格式的EXPLAIN公开select_type为查询块的属性，除非它是<code>SIMPLE</code>或<code>PRIMARY</code>。将JSON名称（如适用）也示于表中。</p>
+</li>
 </ul>
 <table>
 <thead>
@@ -389,10 +391,14 @@
 <li>type</li>
 <li>possible_keys</li>
 <li>key</li>
-<li>key_len<br>MySQL使用的key的长度。如果key列是NUll，key_len也会是NULL。注意,key_len的值enables you to determine how many parts of a multiple-part key MySQL actually uses.</li>
-<li>ref</li>
-<li>rows<br>The rows column indicates the number of rows MySQL believes it must examine to execute the query.For InnoDB tables, this number is an estimate, and may not always be exact.</li>
-<li>filtered</li>
+<li><p>key_len<br>MySQL使用的key的长度。如果key列是NUll，key_len也会是NULL。注意,key_len的值enables you to determine how many parts of a multiple-part key MySQL actually uses.</p>
+</li>
+<li><p>ref</p>
+</li>
+<li><p>rows<br>The rows column indicates the number of rows MySQL believes it must examine to execute the query.For InnoDB tables, this number is an estimate, and may not always be exact.</p>
+</li>
+<li><p>filtered</p>
+</li>
 <li>Extra</li>
 </ul>
 <h3 id="EXPLAIN_Join_Types"><a href="#EXPLAIN_Join_Types" class="headerlink" title="EXPLAIN Join Types"></a>EXPLAIN Join Types</h3><ul>
@@ -467,7 +473,7 @@
 </tr>
 <tr>
 <td style="text-align:right"> Sub_part</td>
-<td>部分索引的数量，<code>NULL</code> 整列索引</td>
+<td>如果只是部分编入索引显示索引字符数，<code>NULL</code> 整列索引</td>
 </tr>
 <tr>
 <td style="text-align:right"> Packed</td>
