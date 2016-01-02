@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JSONP,JavaScript,jQuery," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -51,16 +51,16 @@
 
 
 
-<meta name="description" content="几个解决跨域的示例。">
+<meta name="description" content="Welcome to Hexo! This is your very first post.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="html5中跨域">
-<meta property="og:url" content="http://yoursite.com/2015/02/02/html5中跨域/index.html">
+<meta property="og:url" content="http://yoursite.com/2016/01/02/html5中跨域/index.html">
 <meta property="og:site_name" content="Pino's Blog">
-<meta property="og:description" content="几个解决跨域的示例。">
-<meta property="og:updated_time" content="2016-01-02T03:37:38.464Z">
+<meta property="og:description" content="Welcome to Hexo! This is your very first post.">
+<meta property="og:updated_time" content="2016-01-02T03:44:36.195Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="html5中跨域">
-<meta name="twitter:description" content="几个解决跨域的示例。">
+<meta name="twitter:description" content="Welcome to Hexo! This is your very first post.">
 
 
 
@@ -211,8 +211,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-02-02T10:18:10+08:00" content="2015-02-02">
-              2015-02-02
+            <time itemprop="dateCreated" datetime="2016-01-02T11:44:36+08:00" content="2016-01-02">
+              2016-01-02
             </time>
           </span>
 
@@ -222,8 +222,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/02/02/html5中跨域/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/02/html5中跨域/" itemprop="commentsCount"></span>
+                <a href="/2016/01/02/html5中跨域/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/02/html5中跨域/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -242,43 +242,25 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="u600E_u6837_u7B97_u8DE8_u57DF"><a href="#u600E_u6837_u7B97_u8DE8_u57DF" class="headerlink" title="怎样算跨域"></a>怎样算跨域</h2><p>the protocol (http/https), the domain and the port (the default 80 or :xx) have to be indentical.</p>
-<h2 id="Access-Control-Allow-Origin"><a href="#Access-Control-Allow-Origin" class="headerlink" title="Access-Control-Allow-Origin"></a>Access-Control-Allow-Origin</h2><blockquote>
-<p>XMLHttpRequest cannot load <a href="http://www.remoteserver.local/remote2.php" target="_blank" rel="external">http://www.remoteserver.local/remote2.php</a>. No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘<a href="http://localhost" target="_blank" rel="external">http://localhost</a>‘ is therefore not allowed access.</p>
-</blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">header(<span class="string">'Access-Control-Allow-Origin: http://localhost'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'flightHandler(&#123;</span><br><span class="line">    "code": "CA1998",</span><br><span class="line">    "price": 1780,</span><br><span class="line">    "tickets": 5</span><br><span class="line">&#125;);'</span></span><br></pre></td></tr></table></figure>
-<h2 id="JavaScript_u8DE8_u57DF"><a href="#JavaScript_u8DE8_u57DF" class="headerlink" title="JavaScript跨域"></a>JavaScript跨域</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line"><span class="comment">// 得到航班信息查询结果后的回调函数</span></span><br><span class="line"><span class="keyword">var</span> flightHandler = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">'你查询的航班结果是：票价 '</span> + data.price + <span class="string">' 元，'</span> + <span class="string">'余票 '</span> + data.tickets + <span class="string">' 张。'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 创建script标签，设置其属性</span></span><br><span class="line"><span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span><br><span class="line"><span class="comment">// 提供jsonp服务的url地址（不管是什么类型的地址，最终生成的返回值都是一段javascript代码）</span></span><br><span class="line"><span class="keyword">var</span> url = <span class="string">"http://www.remoteserver.local/remote.php?code=CA1998&amp;callback=flightHandler"</span>;</span><br><span class="line">script.setAttribute(<span class="string">'src'</span>, url);</span><br><span class="line"><span class="comment">// 把script标签加入head，此时调用开始</span></span><br><span class="line"><span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>].appendChild(script);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">'flightHandler(&#123;</span><br><span class="line">    "code": "CA1998",</span><br><span class="line">    "price": 1780,</span><br><span class="line">    "tickets": 5</span><br><span class="line">&#125;);'</span></span><br></pre></td></tr></table></figure>
-<h2 id="jQuery_u8DE8_u57DF"><a href="#jQuery_u8DE8_u57DF" class="headerlink" title="jQuery跨域"></a>jQuery跨域</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">$.ajax(&#123;</span><br><span class="line">     type: <span class="string">"get"</span>,</span><br><span class="line">     <span class="keyword">async</span>: <span class="literal">false</span>,</span><br><span class="line">     url: <span class="string">"http://www.remoteserver.local/remote.php?code=CA1998"</span>,</span><br><span class="line">     dataType: <span class="string">"jsonp"</span>,</span><br><span class="line">     jsonp: <span class="string">"callback"</span>,<span class="comment">//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)</span></span><br><span class="line">     jsonpCallback:<span class="string">"flightHandler"</span>,<span class="comment">//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据</span></span><br><span class="line">     success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">         alert(<span class="string">'您查询到航班信息：票价： '</span> + data.price + <span class="string">' 元，余票： '</span> + data.tickets + <span class="string">' 张。'</span>);</span><br><span class="line">     &#125;,</span><br><span class="line">     error: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         alert(<span class="string">'fail'</span>);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">'flightHandler(&#123;</span><br><span class="line">    "code": "CA1998",</span><br><span class="line">    "price": 1780,</span><br><span class="line">    "tickets": 5</span><br><span class="line">&#125;);'</span></span><br></pre></td></tr></table></figure>
+        <span itemprop="articleBody"><p>???</p>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/JSONP/" rel="tag">#JSONP</a>
-          
-            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
-          
-            <a href="/tags/jQuery/" rel="tag">#jQuery</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2015/12/23/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/23/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -305,8 +287,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/02/02/html5中跨域/"
-           data-title="html5中跨域" data-url="http://yoursite.com/2015/02/02/html5中跨域/">
+      <div class="ds-thread" data-thread-key="2016/01/02/html5中跨域/"
+           data-title="html5中跨域" data-url="http://yoursite.com/2016/01/02/html5中跨域/">
       </div>
     
   </div>
@@ -364,7 +346,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">0</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -403,7 +385,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u600E_u6837_u7B97_u8DE8_u57DF"><span class="nav-number">1.</span> <span class="nav-text">怎样算跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Access-Control-Allow-Origin"><span class="nav-number">2.</span> <span class="nav-text">Access-Control-Allow-Origin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript_u8DE8_u57DF"><span class="nav-number">3.</span> <span class="nav-text">JavaScript跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery_u8DE8_u57DF"><span class="nav-number">4.</span> <span class="nav-text">jQuery跨域</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
