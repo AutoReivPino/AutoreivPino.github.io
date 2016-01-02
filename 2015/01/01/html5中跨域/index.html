@@ -57,7 +57,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/01/01/html5中跨域/index.html">
 <meta property="og:site_name" content="Pino's Blog">
 <meta property="og:description" content="几个解决跨域的示例。">
-<meta property="og:updated_time" content="2016-01-02T12:09:24.256Z">
+<meta property="og:updated_time" content="2016-01-02T14:15:53.433Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="html5中跨域">
 <meta name="twitter:description" content="几个解决跨域的示例。">
@@ -251,6 +251,72 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">'flightHandler(&#123;</span><br><span class="line">    "code": "CA1998",</span><br><span class="line">    "price": 1780,</span><br><span class="line">    "tickets": 5</span><br><span class="line">&#125;);'</span></span><br></pre></td></tr></table></figure>
 <h2 id="jQuery_u8DE8_u57DF"><a href="#jQuery_u8DE8_u57DF" class="headerlink" title="jQuery跨域"></a>jQuery跨域</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// 本地</span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line">    jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">         type: <span class="string">"get"</span>,</span><br><span class="line">         <span class="keyword">async</span>: <span class="literal">false</span>,</span><br><span class="line">         url: <span class="string">"http://www.remoteserver.local/remote.php?code=CA1998"</span>,</span><br><span class="line">         dataType: <span class="string">"jsonp"</span>,</span><br><span class="line">         jsonp: <span class="string">"callback"</span>, <span class="comment">// 可自定义</span></span><br><span class="line">         jsonpCallback:<span class="string">"flightHandler"</span>,<span class="comment">//自定义的jsonp回调函数名，默认为jQuery自动生成的随机函数名</span></span><br><span class="line">         success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">             alert(<span class="string">'您查询到航班信息：票价： '</span> + data.price + <span class="string">' 元，余票： '</span> + data.tickets + <span class="string">' 张。'</span>);</span><br><span class="line">         &#125;,</span><br><span class="line">         error: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">             alert(<span class="string">'fail'</span>);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 远程</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'flightHandler(&#123;</span><br><span class="line">    "code": "CA1998",</span><br><span class="line">    "price": 1780,</span><br><span class="line">    "tickets": 5</span><br><span class="line">&#125;);'</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>——-</th>
+<th>————</th>
+<th>———-</th>
+<th>————–</th>
+<th>————-</th>
+<th>———–</th>
+<th>————-</th>
+<th>———-</th>
+<th>——–</th>
+<th>——</th>
+<th>————</th>
+<th>———</th>
+<th>—————</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Table</td>
+<td>Non_unique</td>
+<td>Key_name</td>
+<td>Seq_in_index</td>
+<td>Column_name</td>
+<td>Collation</td>
+<td>Cardinality</td>
+<td>Sub_part</td>
+<td>Packed</td>
+<td>Null</td>
+<td>Index_type</td>
+<td>Comment</td>
+<td>Index_comment</td>
+</tr>
+<tr>
+<td>cat</td>
+<td>0</td>
+<td>PRIMARY</td>
+<td>1</td>
+<td>cat_id</td>
+<td>A</td>
+<td>15</td>
+<td>NULL</td>
+<td>NULL</td>
+<td></td>
+<td>BTREE</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>——-</td>
+<td>————</td>
+<td>———-</td>
+<td>————–</td>
+<td>————-</td>
+<td>———–</td>
+<td>————-</td>
+<td>———-</td>
+<td>——–</td>
+<td>——</td>
+<td>————</td>
+<td>———</td>
+<td>—————</td>
+</tr>
+</tbody>
+</table>
 </span>
       
     </div>
