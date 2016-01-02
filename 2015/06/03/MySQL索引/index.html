@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="MySQL," />
 
 
 
@@ -51,16 +51,16 @@
 
 
 
-<meta name="description" content="Digging My Potato">
+<meta name="description" content="show index 命令及 explain命令详解">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL索引">
-<meta property="og:url" content="http://yoursite.com/2016/01/03/MySQL索引/index.html">
+<meta property="og:url" content="http://yoursite.com/2015/06/03/MySQL索引/index.html">
 <meta property="og:site_name" content="Pino's Blog">
-<meta property="og:description" content="Digging My Potato">
-<meta property="og:updated_time" content="2016-01-02T16:14:59.075Z">
+<meta property="og:description" content="show index 命令及 explain命令详解">
+<meta property="og:updated_time" content="2016-01-02T16:20:38.396Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL索引">
-<meta name="twitter:description" content="Digging My Potato">
+<meta name="twitter:description" content="show index 命令及 explain命令详解">
 
 
 
@@ -211,8 +211,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-03T00:14:59+08:00" content="2016-01-03">
-              2016-01-03
+            <time itemprop="dateCreated" datetime="2015-06-03T00:14:59+08:00" content="2015-06-03">
+              2015-06-03
             </time>
           </span>
 
@@ -222,8 +222,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/03/MySQL索引/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/03/MySQL索引/" itemprop="commentsCount"></span>
+                <a href="/2015/06/03/MySQL索引/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/03/MySQL索引/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -242,11 +242,266 @@
       
 
       
-        <span itemprop="articleBody"></span>
+        <span itemprop="articleBody"><h2 id="8-8-2_EXPLAIN_Output_Format"><a href="#8-8-2_EXPLAIN_Output_Format" class="headerlink" title="8.8.2 EXPLAIN Output Format"></a>8.8.2 EXPLAIN Output Format</h2><h3 id="EXPLAIN_Output_Columns"><a href="#EXPLAIN_Output_Columns" class="headerlink" title="EXPLAIN Output Columns"></a>EXPLAIN Output Columns</h3><table>
+<thead>
+<tr>
+<th>Column</th>
+<th>JSON Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>select_id</td>
+<td>The SELECT identifier</td>
+</tr>
+<tr>
+<td>select_type</td>
+<td>None</td>
+<td>The SELECT type</td>
+</tr>
+<tr>
+<td>table</td>
+<td>table_name</td>
+<td>The table for the output row</td>
+</tr>
+<tr>
+<td>partitions</td>
+<td>partitions</td>
+<td>The matching partitions</td>
+</tr>
+<tr>
+<td>type</td>
+<td>access_type</td>
+<td>The join type</td>
+</tr>
+<tr>
+<td>possible_keys</td>
+<td>possible_keys</td>
+<td>The possible indexes to choose</td>
+</tr>
+<tr>
+<td>key</td>
+<td>key</td>
+<td>The index actually chosen</td>
+</tr>
+<tr>
+<td>key_len</td>
+<td>key_length</td>
+<td>The length of the chosen key</td>
+</tr>
+<tr>
+<td>ref</td>
+<td>ref</td>
+<td>The columns compared to the index</td>
+</tr>
+<tr>
+<td>rows</td>
+<td>rows</td>
+<td>Estimate of rows to be examined</td>
+</tr>
+<tr>
+<td>filtered</td>
+<td>filtered</td>
+<td>Percentage of rows filtered by table condition</td>
+</tr>
+<tr>
+<td>Extra</td>
+<td>None</td>
+<td>Additional information</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>id(select_id)<br>SELECT查询的序号。该值可以是 <code>NULL</code>,The value can be NULL if the row refers to the union result of other rows.在这种情况下，<code>table</code> 列会显示 <code>&lt;unionM,N&gt;</code>，表示该行联合了M和N的结果。</li>
+<li>select_type<br>SELECT的类型，它可以是下表中的任意一个。JSON格式的EXPLAIN公开select_type为查询块的属性，除非它是<code>SIMPLE</code>或<code>PRIMARY</code>。将JSON名称（如适用）也示于表中。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>select_type Value</th>
+<th>JSON Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SIMPLE</td>
+<td>None</td>
+<td>Simple SELECT (not using UNION or subqueries)</td>
+</tr>
+<tr>
+<td>PRIMARY</td>
+<td>None</td>
+<td>Outermost SELECT</td>
+</tr>
+<tr>
+<td>UNION</td>
+<td>None</td>
+<td>Second or later SELECT statement in a UNION</td>
+</tr>
+<tr>
+<td>DEPENDENT</td>
+<td>UNION dependent (true)</td>
+<td>Second or later SELECT statement in a UNION, dependent on outer query</td>
+</tr>
+<tr>
+<td>UNION RESULT</td>
+<td>union_result</td>
+<td>Result of a UNION.</td>
+</tr>
+<tr>
+<td>SUBQUERY</td>
+<td>None</td>
+<td>First SELECT in subquery</td>
+</tr>
+<tr>
+<td>DEPENDENT SUBQUERY</td>
+<td>dependent (true)</td>
+<td>First SELECT in subquery, dependent on outer query</td>
+</tr>
+<tr>
+<td>DERIVED</td>
+<td>None</td>
+<td>Derived table SELECT (subquery in FROM clause)</td>
+</tr>
+<tr>
+<td>MATERIALIZED</td>
+<td>materialized_from_subquery</td>
+<td>Materialized subquery</td>
+</tr>
+<tr>
+<td>UNCACHEABLE SUBQUERY</td>
+<td>cacheable (false)</td>
+<td>A subquery for which the result cannot be cached and must be re-evaluated for each row of the outer query</td>
+</tr>
+<tr>
+<td>UNCACHEABLE UNION</td>
+<td>cacheable (false)</td>
+<td>The second or later select in a UNION that belongs to an uncacheable subquery (see UNCACHEABLE SUBQUERY)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>table</li>
+<li>partitions</li>
+<li>type</li>
+<li>possible_keys</li>
+<li>key</li>
+<li>key_len<br>MySQL使用的key的长度。如果key列是NUll，key_len也会是NULL。注意,key_len的值enables you to determine how many parts of a multiple-part key MySQL actually uses.</li>
+<li>ref</li>
+<li>rows<br>The rows column indicates the number of rows MySQL believes it must examine to execute the query.For InnoDB tables, this number is an estimate, and may not always be exact.</li>
+<li>filtered</li>
+<li>Extra</li>
+</ul>
+<h3 id="EXPLAIN_Join_Types"><a href="#EXPLAIN_Join_Types" class="headerlink" title="EXPLAIN Join Types"></a>EXPLAIN Join Types</h3><ul>
+<li>system</li>
+<li>const</li>
+<li>eg_ref</li>
+<li>ref</li>
+<li>fulltext</li>
+<li>ref_or_null</li>
+<li>index_merge</li>
+<li>unique_subquery</li>
+<li>index_subquery</li>
+<li>range</li>
+<li>index</li>
+<li>ALL</li>
+</ul>
+<h3 id="EXPLAIN_Extra_Information"><a href="#EXPLAIN_Extra_Information" class="headerlink" title="EXPLAIN Extra Information"></a>EXPLAIN Extra Information</h3><ul>
+<li>Distinct (JSON: distinct)<br>MySQL is looking for distinct values, so it stops searching for more rows for the current row combination after it has found the first matching row.</li>
+<li>FirstMatch(tbl_name) (JSON: first_match)</li>
+<li>Full scan on NULL key (JSON: message text)</li>
+<li>Impossible HAVING (JSON: message text)</li>
+<li>Impossible WHERE (JSON: message text)</li>
+<li>Impossible WHERE noticed after reading const tables (JSON: message text)</li>
+<li>LooseScan(m..n) (JSON: message text)</li>
+<li><p>No matching min/max row (JSON: message text)</p>
+</li>
+<li><p><strong>Using filesort (JSON: using_filesort)</strong><br><br>MySQL must do an extra pass to find out how to retrieve the rows in sorted order. The sort is done by going through all rows according to the join type and storing the sort key and pointer to the row for all rows that match the WHERE clause. The keys then are sorted and the rows are retrieved in sorted order. See <a href="http://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html" target="_blank" rel="external">Section 8.2.1.15, “ORDER BY Optimization”</a>.</p>
+</li>
+<li><p><strong>Using index (JSON: using_index)</strong><br><br>行信息是从索引树中获得，不对行做实际读取。只有在列是索引的一部分时才能使用。<br><br>If the Extra also says Using where, it means the index is being used to perform lookups of key values. Without Using where, the optimizer may be reading the index to avoid reading data rows but not using it for lookups. For example, if the index is a covering index for the query, the optimizer may scan it without using it for lookups.<br><br>For InnoDB tables that have a user-defined clustered index, that index can be used even when Using index is absent from the Extra column. This is the case if type is index and key is PRIMARY.</p>
+</li>
+<li><p><strong>Using temporary (JSON: using_temporary_table)</strong><br><br>为了解决查询，MySQL需要创建一个临时表来容纳结果。这通常发生在query包含<code>GROUP BY</code>和<code>ORDER BY</code>子句时。</p>
+</li>
+<li><p><strong>Using where (JSON: attached_condition text)</strong><br><br>WHERE子句用于限制匹配下一张表的或者返回客户端的行。除非你专门打算获取或查看表中的所有行，如果Extra value 不是 Using where 而且 table join type 是 ALL 或者 index，那你的query中可能出了什么错。</p>
+</li>
+</ul>
+<h3 id="EXPLAIN_Output_Interpretation"><a href="#EXPLAIN_Output_Interpretation" class="headerlink" title="EXPLAIN Output Interpretation"></a>EXPLAIN Output Interpretation</h3><h2 id="13-7-5-22_SHOW_INDEX_Syntax"><a href="#13-7-5-22_SHOW_INDEX_Syntax" class="headerlink" title="13.7.5.22 SHOW INDEX Syntax"></a>13.7.5.22 SHOW INDEX Syntax</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW &#123;INDEX | INDEXES | KEYS&#125;&#10;    &#123;FROM | IN&#125; tbl_name&#10;    [&#123;FROM | IN&#125; db_name]&#10;    [WHERE expr]</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">字段</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right"> Table</td>
+<td>表名</td>
+</tr>
+<tr>
+<td style="text-align:right"> Non_unique</td>
+<td><code>0</code> 如果索引不能相同，<code>1</code> 允许相同索引</td>
+</tr>
+<tr>
+<td style="text-align:right"> Key_name</td>
+<td>索引名。如果索引是主键，名字就是 <code>PRIMARY</code></td>
+</tr>
+<tr>
+<td style="text-align:right"> Seq_in_index</td>
+<td>索引序号。一般从 <code>1</code> 开始</td>
+</tr>
+<tr>
+<td style="text-align:right"> Column_name</td>
+<td>有索引的列名</td>
+</tr>
+<tr>
+<td style="text-align:right"> Collation</td>
+<td>列在索引中如何排序。在MySQL中，值可以是 <code>A</code>（升序）或 <code>NULL</code>(不排序)</td>
+</tr>
+<tr>
+<td style="text-align:right"> Cardinality</td>
+<td>An estimate of the number of unique values in the index. This is updated by running ANALYZE TABLE or myisamchk -a. Cardinality is counted based on statistics stored as integers, so the value is not necessarily exact even for small tables. The higher the cardinality, the greater the chance that MySQL uses the index when doing joins.</td>
+</tr>
+<tr>
+<td style="text-align:right"> Sub_part</td>
+<td>部分索引的数量，<code>NULL</code> 整列索引</td>
+</tr>
+<tr>
+<td style="text-align:right"> Packed</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td style="text-align:right"> Null</td>
+<td><code>YES</code>列可能包含<code>NULL</code>值，<code> </code>不包含</td>
+</tr>
+<tr>
+<td style="text-align:right"> Index_type</td>
+<td>The index method used (<code>BTREE</code>, <code>FULLTEXT</code>, <code>HASH</code>, <code>RTREE</code>).</td>
+</tr>
+<tr>
+<td style="text-align:right"> Comment</td>
+<td>索引说明。如索引是否禁用</td>
+</tr>
+<tr>
+<td style="text-align:right"> Index_comment</td>
+<td>Any comment provided for the index with a COMMENT attribute when the index was created.</td>
+</tr>
+</tbody>
+</table>
+</span>
       
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag">#MySQL</a>
+          
+        </div>
       
 
       
@@ -286,8 +541,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/03/MySQL索引/"
-           data-title="MySQL索引" data-url="http://yoursite.com/2016/01/03/MySQL索引/">
+      <div class="ds-thread" data-thread-key="2015/06/03/MySQL索引/"
+           data-title="MySQL索引" data-url="http://yoursite.com/2015/06/03/MySQL索引/">
       </div>
     
   </div>
@@ -345,7 +600,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -384,7 +639,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-8-2_EXPLAIN_Output_Format"><span class="nav-number">1.</span> <span class="nav-text">8.8.2 EXPLAIN Output Format</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXPLAIN_Output_Columns"><span class="nav-number">1.1.</span> <span class="nav-text">EXPLAIN Output Columns</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXPLAIN_Join_Types"><span class="nav-number">1.2.</span> <span class="nav-text">EXPLAIN Join Types</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXPLAIN_Extra_Information"><span class="nav-number">1.3.</span> <span class="nav-text">EXPLAIN Extra Information</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXPLAIN_Output_Interpretation"><span class="nav-number">1.4.</span> <span class="nav-text">EXPLAIN Output Interpretation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-7-5-22_SHOW_INDEX_Syntax"><span class="nav-number">2.</span> <span class="nav-text">13.7.5.22 SHOW INDEX Syntax</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
