@@ -57,7 +57,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/06/03/MySQL索引/index.html">
 <meta property="og:site_name" content="Pino's Blog">
 <meta property="og:description" content="show index 命令及 explain命令详解">
-<meta property="og:updated_time" content="2016-01-02T16:35:22.770Z">
+<meta property="og:updated_time" content="2016-01-02T16:47:09.281Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL索引">
 <meta name="twitter:description" content="show index 命令及 explain命令详解">
@@ -427,7 +427,7 @@
 </li>
 <li><p><strong>Using filesort (JSON: using_filesort)</strong><br>MySQL must do an extra pass to find out how to retrieve the rows in sorted order. The sort is done by going through all rows according to the join type and storing the sort key and pointer to the row for all rows that match the WHERE clause. The keys then are sorted and the rows are retrieved in sorted order. See <a href="http://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html" target="_blank" rel="external">Section 8.2.1.15, “ORDER BY Optimization”</a>.</p>
 </li>
-<li><p><strong>Using index (JSON: using_index)</strong><br>行信息是从索引树中获得，不对行做实际读取。只有在列是索引的一部分时才能使用。<br><br>If the Extra also says Using where, it means the index is being used to perform lookups of key values. Without Using where, the optimizer may be reading the index to avoid reading data rows but not using it for lookups. For example, if the index is a covering index for the query, the optimizer may scan it without using it for lookups.<br><br>For InnoDB tables that have a user-defined clustered index, that index can be used even when Using index is absent from the Extra column. This is the case if type is index and key is PRIMARY.</p>
+<li><p><strong>Using index (JSON: using_index)</strong><br>只通过查询索引里的信息就能得到结果，不读数据文件。只有在列是索引的一部分时才能使用。<br>If the Extra also says Using where, it means the index is being used to perform lookups of key values. Without Using where, the optimizer may be reading the index to avoid reading data rows but not using it for lookups. For example, if the index is a covering index for the query, the optimizer may scan it without using it for lookups.<br><br>For InnoDB tables that have a user-defined clustered index, that index can be used even when Using index is absent from the Extra column. This is the case if type is index and key is PRIMARY.</p>
 </li>
 <li><p><strong>Using temporary (JSON: using_temporary_table)</strong><br>为了解决查询，MySQL需要创建一个临时表来容纳结果。这通常发生在query包含<code>GROUP BY</code>和<code>ORDER BY</code>子句时。</p>
 </li>
