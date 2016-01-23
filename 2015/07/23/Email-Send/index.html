@@ -1,0 +1,802 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="PHP,SMTP," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="SMTP和HTTP一样都是基于明文传输的文本协议，所以非常的直观、易学习、易伪造。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Email Send">
+<meta property="og:url" content="http://yoursite.com/2015/07/23/Email-Send/index.html">
+<meta property="og:site_name" content="Pino's Blog">
+<meta property="og:description" content="SMTP和HTTP一样都是基于明文传输的文本协议，所以非常的直观、易学习、易伪造。">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/53537e0fgw1f02ete86qtj20it0660sy.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/53537e0fgw1f02h1np86zj20io09wwgd.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/53537e0fgw1f02hx8iskhj20j3022jr7.jpg">
+<meta property="og:updated_time" content="2016-01-23T10:48:24.153Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Email Send">
+<meta name="twitter:description" content="SMTP和HTTP一样都是基于明文传输的文本协议，所以非常的直观、易学习、易伪造。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> Email Send | Pino's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Pino's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Try A Little Harder</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Email Send
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-07-23T20:04:06+08:00" content="2015-07-23">
+              2015-07-23
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/23/Email-Send/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/23/Email-Send/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="SMTP_u534F_u8BAE_u53D1_u9001_u90AE_u4EF6"><a href="#SMTP_u534F_u8BAE_u53D1_u9001_u90AE_u4EF6" class="headerlink" title="SMTP协议发送邮件"></a>SMTP协议发送邮件</h2><h3 id="u4EC0_u4E48_u662FSMTP_u534F_u8BAE"><a href="#u4EC0_u4E48_u662FSMTP_u534F_u8BAE" class="headerlink" title="什么是SMTP协议"></a>什么是SMTP协议</h3><blockquote>
+<p>简单邮件传输协议 (Simple Mail Transfer Protocol, SMTP) 是事实上的在Internet传输email的标准。</p>
+<p>SMTP是一个相对简单的基于文本的协议。在其之上指定了一条消息的一个或多个接收者（在大多数情况下被确认是存在的），然后消息文本会被传输。可以很简单地通过telnet程序来测试一个SMTP服务器。SMTP使用TCP端口25。要为一个给定的域名决定一个SMTP服务器，需要使用MX (Mail eXchange) DNS。</p>
+<p>由于这个协议始是基于纯ASCII文本的，它在二进制文件上处理得并不好。诸如MIME的标准被开发来编码二进制文件以使其通过SMTP来传输。今天，大多数SMTP服务器都支持8位MIME扩展，它使二进制文件的传输变得几乎和纯文本一样简单。</p>
+<p>SMTP是一个“推”的协议，它不允许根据需要从远程服务器上“拉”来消息。要做到这点，邮件客户端必须使用POP3或IMAP。另一个SMTP服务器可以使用ETRN在SMTP上触发一个发送。</p>
+</blockquote>
+<h3 id="u601D_u8003"><a href="#u601D_u8003" class="headerlink" title="思考"></a>思考</h3><p>如果我知道你的邮件准确服务器的地址，但是，我没有邮箱没有email，我能否给你寄信？</p>
+<blockquote>
+<ol>
+<li>首先要找到这么email存储邮件的准备服务器——你到底在哪儿。</li>
+<li>连接服务器用SMTP与之对话。</li>
+</ol>
+</blockquote>
+<h3 id="u67E5_u627E_u670D_u52A1_u5668"><a href="#u67E5_u627E_u670D_u52A1_u5668" class="headerlink" title="查找服务器"></a>查找服务器</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nslookup <span class="number">163</span><span class="class">.com</span></span><br><span class="line"><span class="comment">// name server lookup</span></span><br></pre></td></tr></table></figure>
+<p>这个查到的是A记录，意思是你在浏览器上输 <code>163.com</code>，DNS服务器把你引导到哪一个IP去。我不是要在地址栏上访问它的网页，我是要往 <code>163.com</code> 送邮件，而邮件解析呢，有可能得到的就是另外一个结果了。所以查域名上的邮件服务器，你就要查询它的<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nslookup -q=mx <span class="number">163.</span><span class="keyword">com</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://ww1.sinaimg.cn/large/53537e0fgw1f02ete86qtj20it0660sy.jpg" alt=""><br>按优先级从高到低，查到了4台服务器地址。查到的这4台服务器，我们的163邮件账号都真正的存在这些服务器上。那么你只要往这4个服务器上任意一台仍一封邮件，告诉它要寄给哪一个账号，那个账号一会儿就能收到邮件了。</p>
+<h3 id="SMTP_u5BF9_u8BDD"><a href="#SMTP_u5BF9_u8BDD" class="headerlink" title="SMTP对话"></a>SMTP对话</h3><p>SMTP和HTTP一样都是基于明文传输的文本协议，所以非常的直观。使用25端口。<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">telnet <span class="number">163</span>mx03.mxmail.netease.com <span class="number">25</span></span><br><span class="line">helo obama</span><br><span class="line">mail <span class="keyword">from</span>:<span class="variable">&lt;obama@whitehouse.gov&gt;</span></span><br><span class="line">rcpt <span class="keyword">to</span>:<span class="variable">&lt;zhangxvanning@163.com&gt;</span></span><br><span class="line">data</span><br><span class="line">subject: heiheihei</span><br><span class="line"><span class="keyword">to</span>: my dear</span><br><span class="line"><span class="keyword">from</span>: goooman</span><br><span class="line"></span><br><span class="line">welcome <span class="keyword">to</span> usa.</span><br><span class="line">.</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://ww2.sinaimg.cn/large/53537e0fgw1f02h1np86zj20io09wwgd.jpg" alt=""><br>发送成功！<br><img src="http://ww4.sinaimg.cn/large/53537e0fgw1f02hx8iskhj20j3022jr7.jpg" alt=""><br>什么，你说失败了？<br>我把信扔进邮箱就是成功，至于邮递员愿不愿意送信就不是我能管的了。</p>
+<p>如果是QQ邮箱，接收到邮件后会自动放进垃圾箱，不会有邮件提示。从这一点来说，还是用QQ邮箱练习吧。</p>
+<h2 id="ESMTP_u53D1_u9001_u90AE_u4EF6"><a href="#ESMTP_u53D1_u9001_u90AE_u4EF6" class="headerlink" title="ESMTP发送邮件"></a>ESMTP发送邮件</h2><p>Extended SMTP</p>
+<p>SMTP协议原本就没有账号这个概念，你随便找一个邮件服务器地址，比如刚才的163服务器。我故意说 <code>rcpt to</code> 是 <code>qq.com</code>，其实它按照最原始的设计也是能帮我送到的。它发现是给qq的不是给它的，因为它就直接帮我转到qq的服务器上了。就好像你往邮箱扔了一封信，结果邮箱一打开发现这封信不是寄往上海的，是给甘肃的，于是它就继续转到甘肃去了。但是这样呢也给很多坏人带来可乘之机，我就找找我附近的速度比较快的邮件服务器，一直往里投信，让那些游戏服务器帮我转信封，那些邮件服务器遭殃了，每天转大量的垃圾邮件，被人当成专门发送垃圾邮件的服务器给封了。它多冤枉啊。所以后来这样的服务器只收不转发。</p>
+<p>你要想转发，有一类服务器是专门帮你转发邮件的。比如说 <code>smtp.163.com</code>，这些邮件服务器是要用户名的。也就是说，需要登录。</p>
+<p><code>helo</code> 后 <code>auth login</code><br>密码用户名base64</p>
+<h2 id="MAIL_u51FD_u6570_u53D1_u9001_u90AE_u4EF6"><a href="#MAIL_u51FD_u6570_u53D1_u9001_u90AE_u4EF6" class="headerlink" title="MAIL函数发送邮件"></a>MAIL函数发送邮件</h2><p><code>mail</code> 函数的作用</p>
+<blockquote>
+<p>连接到邮件服务器，利用SMPT协议与服务器交互并头邮件</p>
+</blockquote>
+<p>由于 <code>mail</code> 函数不支持ESMTP协议。所以只能直投，不能登录。而最终收件服务器是在 <code>php.ini</code> 中指定。</p>
+<p>如果我们有一台25端口的SMTP服务器，且该服务器不需要登录，也能帮我们转发。<br><code>mail</code> 需要一台匿名SMTP服务器，但这台服务器未必要在本机装。不过互联网上这种都不好找了。还是在自己电脑上装吧。</p>
+<p>反垃圾邮件是一个很重要的研究课题，个邮件服务商都对垃圾邮件做了很多防范。</p>
+<blockquote>
+<ol>
+<li>IP是否动态。如果是，私人用户，极易被打成垃圾邮件。</li>
+<li>IP是否短期内发送大量邮件。</li>
+<li>邮件内容含有“发票”、“交友”等信息。</li>
+<li>各大邮件上相互之间有一份白名单，相互容易放行。</li>
+</ol>
+</blockquote>
+<p><code>mail</code> 发送不太友好。又因为IP是动态的，而且是私人IP，没有权威，易被打成垃圾。肿么办。</p>
+<p><code>php + socket</code> 编程，完成80端口的通信，并写一个采集类。同时 <code>php + socket</code> 完成25端口的通信，完成一个邮件类来发送邮件。这就是著名的开源邮件类PHPMailer。</p>
+<h2 id="PHPMailer_u53D1_u9001_u90AE_u4EF6"><a href="#PHPMailer_u53D1_u9001_u90AE_u4EF6" class="headerlink" title="PHPMailer发送邮件"></a>PHPMailer发送邮件</h2><p><a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwjO_-np37_KAhXCpZQKHfv_CuwQFggdMAA&amp;url=https%3A%2F%2Fgithub.com%2FPHPMailer%2FPHPMailer&amp;usg=AFQjCNGm9hcmt-LSQwMsaUUv5IJ5DwapCg&amp;sig2=0H8I3gXmGvIbpECiP4H08A" target="_blank" rel="external">PHPMailer/PHPMailer - PHP - GitHub</a></p>
+<h2 id="POP3_u534F_u8BAE_u6536_u53D6_u90AE_u4EF6"><a href="#POP3_u534F_u8BAE_u6536_u53D6_u90AE_u4EF6" class="headerlink" title="POP3协议收取邮件"></a>POP3协议收取邮件</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>参数</th>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user</td>
+<td>username</td>
+<td>认可</td>
+<td>此命令与下面的pass命令若成功，将导致状态转换</td>
+</tr>
+<tr>
+<td>pass</td>
+<td>password</td>
+<td>认可</td>
+<td>明文传输</td>
+</tr>
+<tr>
+<td>apop</td>
+<td>name,digest</td>
+<td>认可</td>
+<td>一种安全传输口令的办法，digest是md5消息摘要，执行成功导致状态转换，请参见 RFC 1321</td>
+</tr>
+<tr>
+<td>stat</td>
+<td>none</td>
+<td>处理</td>
+<td>请求服务器发回关于邮箱的统计资料，如邮件总数和总字节数</td>
+</tr>
+<tr>
+<td>uidl</td>
+<td>[msg#]</td>
+<td>处理</td>
+<td>返回邮件的唯一标识符，pop3会话的每个标识符都将是唯一的</td>
+</tr>
+<tr>
+<td>list</td>
+<td>[msg#]</td>
+<td>处理</td>
+<td>返回邮件数量和每个邮件的大小</td>
+</tr>
+<tr>
+<td>retr</td>
+<td>[msg#]</td>
+<td>处理</td>
+<td>返回由参数标识的邮件的全部文本</td>
+</tr>
+<tr>
+<td>dele</td>
+<td>[msg#]</td>
+<td>处理</td>
+<td>服务器将由参数标识的邮件标记为删除，由quit命令执行</td>
+</tr>
+<tr>
+<td>rset</td>
+<td>none</td>
+<td>处理</td>
+<td>服务器将重置所有标记为删除的邮件，用于撤消dele命令</td>
+</tr>
+<tr>
+<td>top</td>
+<td>[msg#],n</td>
+<td>处理</td>
+<td>服务器将返回由参数标识的邮件前n行内容，n必须是正整数</td>
+</tr>
+<tr>
+<td>noop</td>
+<td>none</td>
+<td>处理</td>
+<td>服务器返回一个肯定的响应，不做任何操作。</td>
+</tr>
+<tr>
+<td>quit</td>
+<td>none</td>
+<td>更新</td>
+<td>退出</td>
+</tr>
+</tbody>
+</table>
+<p><code>top</code>，<code>retr</code> 的数据可能是base64编码后的。</p>
+<h2 id="u6FC0_u6D3B_u90AE_u4EF6_u5B9E_u6218"><a href="#u6FC0_u6D3B_u90AE_u4EF6_u5B9E_u6218" class="headerlink" title="激活邮件实战"></a>激活邮件实战</h2><p>开发场景：</p>
+<ol>
+<li>激活邮件<br>注册后，该账户处于非激活阶段，往该账户的注册邮箱发送带链接的email。点击链接，完成激活。</li>
+<li>找回密码</li>
+<li>给注册邮箱给指定邮箱发信。<br>这种方法可以避免激活邮件被打到垃圾箱。</li>
+</ol>
+<h2 id="PHP_u6536_u53D6_u90AE_u4EF6"><a href="#PHP_u6536_u53D6_u90AE_u4EF6" class="headerlink" title="PHP收取邮件"></a>PHP收取邮件</h2><p>这里介绍激活邮件实战的第3种方法的服务端实现。</p>
+<p>用户往指定邮箱发送邮件，内容随意。系统即可激活此用户。</p>
+<ol>
+<li>PHP + POP3协议 收取信件</li>
+<li>分析发件人并激活改用户</li>
+<li>定时运行（linux:crontab）</li>
+</ol>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag">#PHP</a>
+          
+            <a href="/tags/SMTP/" rel="tag">#SMTP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/03/MySQL索引/" rel="next" title="MySQL索引">
+                <i class="fa fa-chevron-left"></i> MySQL索引
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/07/23/Email-Send/"
+           data-title="Email Send" data-url="http://yoursite.com/2015/07/23/Email-Send/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/13427678?v=3&s=460" alt="Pino" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Pino</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Digging My Potato</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://ilvsx.im/" target="_blank">ilvsx</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SMTP_u534F_u8BAE_u53D1_u9001_u90AE_u4EF6"><span class="nav-number">1.</span> <span class="nav-text">SMTP协议发送邮件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u4EC0_u4E48_u662FSMTP_u534F_u8BAE"><span class="nav-number">1.1.</span> <span class="nav-text">什么是SMTP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u601D_u8003"><span class="nav-number">1.2.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u67E5_u627E_u670D_u52A1_u5668"><span class="nav-number">1.3.</span> <span class="nav-text">查找服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMTP_u5BF9_u8BDD"><span class="nav-number">1.4.</span> <span class="nav-text">SMTP对话</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ESMTP_u53D1_u9001_u90AE_u4EF6"><span class="nav-number">2.</span> <span class="nav-text">ESMTP发送邮件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAIL_u51FD_u6570_u53D1_u9001_u90AE_u4EF6"><span class="nav-number">3.</span> <span class="nav-text">MAIL函数发送邮件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHPMailer_u53D1_u9001_u90AE_u4EF6"><span class="nav-number">4.</span> <span class="nav-text">PHPMailer发送邮件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POP3_u534F_u8BAE_u6536_u53D6_u90AE_u4EF6"><span class="nav-number">5.</span> <span class="nav-text">POP3协议收取邮件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u6FC0_u6D3B_u90AE_u4EF6_u5B9E_u6218"><span class="nav-number">6.</span> <span class="nav-text">激活邮件实战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP_u6536_u53D6_u90AE_u4EF6"><span class="nav-number">7.</span> <span class="nav-text">PHP收取邮件</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pino</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"autoreivpino"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>
